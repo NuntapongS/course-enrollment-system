@@ -16,7 +16,21 @@ export const userHandler = {
     try {
       return await userService.getAll();
     } catch (err) {
-      return { error: "Failed to fetch users" };
+      console.error("Get all users error:", err);
+      throw err;
+    }
+  },
+
+  async getUserById(id: string) {
+    try {
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return { error: "User not found" };
+      }
+      return user;
+    } catch (err) {
+      console.error("Get user by id error:", err);
+      throw err;
     }
   },
 };

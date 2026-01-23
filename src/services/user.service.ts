@@ -10,4 +10,8 @@ export const userService = {
   async getAll(): Promise<User[]> {
     return userRepository.getAll();
   },
+
+  async getUserById(id: string): Promise<User | undefined> {
+    return userRepository.getUserById(id);
+  },
 };
