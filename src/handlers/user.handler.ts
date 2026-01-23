@@ -11,4 +11,12 @@ export const userHandler = {
       throw err;
     }
   },
+
+  async getAll() {
+    try {
+      return await userService.getAll();
+    } catch (err) {
+      return { error: "Failed to fetch users" };
+    }
+  },
 };

@@ -6,4 +6,8 @@ export const userService = {
     const newUser = await userRepository.create(data);
     return newUser;
   },
+
+  async getAll(): Promise<User[]> {
+    return userRepository.getAll();
+  },
 };

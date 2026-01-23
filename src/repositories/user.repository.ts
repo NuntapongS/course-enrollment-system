@@ -12,4 +12,14 @@ export const userRepository = {
       createdAt: newUser.createdAt || new Date(),
     };
   },
+
+  async getAll(): Promise<User[]> {
+    const allUsers = await db.select().from(users);
+    return allUsers.map((user) => ({
+      id: String(user.id),
+      name: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+      createdAt: user.createdAt || new Date(),
+    }));
+  },
 };
