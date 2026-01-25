@@ -35,4 +35,21 @@ export const userRepository = {
         }
       : undefined;
   },
+
+  async update(id: string, data: Partial<UserInput>): Promise<User | null> {
+    const [updatedUser] = await db
+      .update(users)
+      .set(data)
+      .where(eq(users.id, id))
+      .returning();
+
+    return updatedUser
+      ? {
+          id: String(updatedUser.id),
+          name: `${updatedUser.firstName} ${updatedUser.lastName}`,
+          email: updatedUser.email,
+          createdAt: updatedUser.createdAt || new Date(),
+        }
+      : null;
+  },
 };

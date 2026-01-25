@@ -33,4 +33,17 @@ export const userHandler = {
       throw err;
     }
   },
+
+  async updateUser(id: string, body: Partial<UserInput>) {
+    try {
+      const updatedUser = await userService.updateUser(id, body);
+      if (!updatedUser) {
+        return { error: "User not found or no changes made" };
+      }
+      return updatedUser;
+    } catch (err) {
+      console.error("Update user error:", err);
+      throw err;
+    }
+  },
 };

@@ -14,4 +14,9 @@ export const userService = {
   async getUserById(id: string): Promise<User | undefined> {
     return userRepository.getUserById(id);
   },
+
+  async updateUser(id: string, data: Partial<UserInput>): Promise<User | null> {
+    const updatedUser = await userRepository.update(id, data);
+    return updatedUser;
+  },
 };
