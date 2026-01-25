@@ -19,4 +19,8 @@ export const userService = {
     const updatedUser = await userRepository.update(id, data);
     return updatedUser;
   },
+
+  async deleteUser(id: string): Promise<void> {
+    await userRepository.delete(id);
+  },
 };

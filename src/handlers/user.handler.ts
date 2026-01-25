@@ -46,4 +46,18 @@ export const userHandler = {
       throw err;
     }
   },
+
+  async deleteUser(id: string) {
+    try {
+      const user = await userService.getUserById(id);
+      if (!user) {
+        return { error: "User not found" };
+      }
+      await userService.deleteUser(id);
+      return { message: "User deleted successfully" };
+    } catch (err) {
+      console.error("Delete user error:", err);
+      throw err;
+    }
+  },
 };

@@ -52,4 +52,8 @@ export const userRepository = {
         }
       : null;
   },
+
+  async delete(id: string): Promise<void> {
+    await db.delete(users).where(eq(users.id, id));
+  },
 };
