@@ -1,16 +1,13 @@
 import { db } from "../database/index";
 import { users } from "../database/schema";
-import { UserInput, User } from "../types";
+import { UserInput, User, UserOutput } from "../types";
 import { eq } from "drizzle-orm";
 
 export const userRepository = {
-  async create(data: UserInput): Promise<User> {
+  async create(data: UserInput): Promise<UserOutput> {
     const [newUser] = await db.insert(users).values(data).returning();
     return {
       id: String(newUser.id),
-      name: `${newUser.firstName} ${newUser.lastName}`,
-      email: newUser.email,
-      createdAt: newUser.createdAt || new Date(),
     };
   },
 
@@ -36,7 +33,10 @@ export const userRepository = {
       : undefined;
   },
 
-  async update(id: string, data: Partial<UserInput>): Promise<User | null> {
+  async update(
+    id: string,
+    data: Partial<UserInput>,
+  ): Promise<UserOutput | null> {
     const [updatedUser] = await db
       .update(users)
       .set(data)
@@ -46,9 +46,6 @@ export const userRepository = {
     return updatedUser
       ? {
           id: String(updatedUser.id),
-          name: `${updatedUser.firstName} ${updatedUser.lastName}`,
-          email: updatedUser.email,
-          createdAt: updatedUser.createdAt || new Date(),
         }
       : null;
   },
