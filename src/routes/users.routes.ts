@@ -11,7 +11,6 @@ export const userRoute = new Elysia({ prefix: "/users" })
       body: t.Object({
         firstName: t.String(),
         lastName: t.String(),
-        email: t.String({ format: "email" }),
       }),
     },
   )
@@ -33,7 +32,6 @@ export const userRoute = new Elysia({ prefix: "/users" })
       body: t.Object({
         firstName: t.Optional(t.String()),
         lastName: t.Optional(t.String()),
-        email: t.Optional(t.String({ format: "email" })),
       }),
     },
   )

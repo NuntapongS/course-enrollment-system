@@ -16,7 +16,6 @@ export const userRepository = {
     return allUsers.map((user) => ({
       id: String(user.id),
       name: `${user.firstName} ${user.lastName}`,
-      email: user.email,
       createdAt: user.createdAt || new Date(),
     }));
   },
@@ -27,7 +26,6 @@ export const userRepository = {
       ? {
           id: String(user.id),
           name: `${user.firstName} ${user.lastName}`,
-          email: user.email,
           createdAt: user.createdAt || new Date(),
         }
       : undefined;

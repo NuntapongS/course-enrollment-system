@@ -1,7 +1,6 @@
 export type UserInput = {
   firstName: string;
   lastName: string;
-  email: string;
 };
 
 export type UserOutput = {
@@ -11,6 +10,5 @@ export type UserOutput = {
 export type User = {
   id: string;
   name: string;
-  email: string;
   createdAt: Date;
 };
