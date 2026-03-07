@@ -1,0 +1,1 @@
+ALTER TABLE "user_informations" ALTER COLUMN "gender" SET DATA TYPE varchar(20);
