@@ -21,7 +21,18 @@ export const userService = {
   },
 
   async getAll(): Promise<User[]> {
-    return userRepository.getAll();
+    const users = await userRepository.getAll();
+
+    const userInformation = await Promise.all(
+      users.map(async (user) => {
+        const info = await userInformationRepository.getUserInfoByUserId(
+          user.id,
+        );
+        return { ...user, ...info };
+      }),
+    );
+
+    return userInformation;
   },
 
   async getUserById(id: string): Promise<User | undefined> {

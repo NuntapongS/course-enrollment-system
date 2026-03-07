@@ -16,3 +16,10 @@ export type User = {
   name: string;
   createdAt: Date;
 };
+
+export type UserInformation = {
+  citizen_id: string;
+  gender: "male" | "female" | "other";
+  phone_number: string;
+  email: string;
+};

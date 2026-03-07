@@ -1,6 +1,7 @@
 import { db } from "../database";
 import { user_informations } from "../database/schema";
-import { UserOutput } from "../types";
+import { UserInformation, UserOutput } from "../types";
+import { eq } from "drizzle-orm";
 
 export const userInformationRepository = {
   async createUserInfo(
@@ -23,5 +24,22 @@ export const userInformationRepository = {
     return {
       id: String(newUserInfo.id),
     };
+  },
+
+  async getUserInfoByUserId(
+    userId: string,
+  ): Promise<UserInformation | undefined> {
+    const [userInfo] = await db
+      .select()
+      .from(user_informations)
+      .where(eq(user_informations.userId, userId));
+    return userInfo
+      ? {
+          citizen_id: userInfo.citizen_id,
+          gender: userInfo.gender,
+          phone_number: userInfo.phone_number,
+          email: userInfo.email,
+        }
+      : undefined;
   },
 };
