@@ -1,7 +1,9 @@
 import { pgTable, uuid, varchar, timestamp, pgEnum } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
-const genderEnum = pgEnum("gender_enum", ["male", "female", "other"]);
+export const GENDER_VALUES = ["male", "female", "other"] as const;
+
+export const genderEnum = pgEnum("gender_enum", GENDER_VALUES);
 
 export const users = pgTable("users", {
   id: uuid("id")
