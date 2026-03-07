@@ -1,11 +1,14 @@
 import { db } from "../database/index";
-import { users } from "../database/schema";
+import { users, user_informations } from "../database/schema";
 import { UserInput, User, UserOutput } from "../types";
 import { eq } from "drizzle-orm";
 
 export const userRepository = {
-  async create(data: UserInput): Promise<UserOutput> {
-    const [newUser] = await db.insert(users).values(data).returning();
+  async create(firstName: string, lastName: string): Promise<UserOutput> {
+    const [newUser] = await db
+      .insert(users)
+      .values({ firstName, lastName })
+      .returning();
     return {
       id: String(newUser.id),
     };

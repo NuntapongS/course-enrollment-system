@@ -11,6 +11,14 @@ export const userRoute = new Elysia({ prefix: "/users" })
       body: t.Object({
         firstName: t.String(),
         lastName: t.String(),
+        citizen_id: t.String(),
+        gender: t.Enum({
+          male: "male",
+          female: "female",
+          other: "other",
+        }),
+        phone_number: t.String(),
+        email: t.String(),
       }),
     },
   )

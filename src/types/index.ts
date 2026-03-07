@@ -1,6 +1,10 @@
 export type UserInput = {
   firstName: string;
   lastName: string;
+  citizen_id?: string;
+  gender?: "male" | "female" | "other";
+  phone_number?: string;
+  email?: string;
 };
 
 export type UserOutput = {
