@@ -17,6 +17,13 @@ export type User = {
   createdAt: Date;
 };
 
+export type UserWithInformation = User & {
+  citizen_id: string;
+  gender: "male" | "female" | "other";
+  phone_number: string;
+  email: string;
+};
+
 export type UserInformation = {
   citizen_id: string;
   gender: "male" | "female" | "other";

@@ -23,35 +23,44 @@ export const userRepository = {
     }));
   },
 
-  async getUserById(id: string): Promise<User | undefined> {
+  async getUserById(id: string): Promise<User> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user
-      ? {
-          id: String(user.id),
-          name: `${user.firstName} ${user.lastName}`,
-          createdAt: user.createdAt || new Date(),
-        }
-      : undefined;
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return {
+      id: String(user.id),
+      name: `${user.firstName} ${user.lastName}`,
+      createdAt: user.createdAt || new Date(),
+    };
   },
 
-  async update(
-    id: string,
-    data: Partial<UserInput>,
-  ): Promise<UserOutput | null> {
+  async update(id: string, data: Partial<UserInput>): Promise<UserOutput> {
     const [updatedUser] = await db
       .update(users)
       .set(data)
       .where(eq(users.id, id))
       .returning();
 
-    return updatedUser
-      ? {
-          id: String(updatedUser.id),
-        }
-      : null;
+    if (!updatedUser) {
+      throw new Error("User not found");
+    }
+
+    return {
+      id: String(updatedUser.id),
+    };
   },
 
   async delete(id: string): Promise<void> {
-    await db.delete(users).where(eq(users.id, id));
+    const [deletedUser] = await db
+      .delete(users)
+      .where(eq(users.id, id))
+      .returning();
+
+    if (!deletedUser) {
+      throw new Error("User not found");
+    }
   },
 };

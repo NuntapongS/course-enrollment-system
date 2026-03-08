@@ -1,6 +1,6 @@
 import { userInformationRepository } from "../repositories/user.information.repository";
 import { userRepository } from "../repositories/user.repository";
-import { UserInput, User, UserOutput } from "../types";
+import { UserInput, User, UserOutput, UserWithInformation } from "../types";
 
 export const userService = {
   async create(data: UserInput): Promise<UserOutput> {
@@ -35,8 +35,16 @@ export const userService = {
     return userInformation;
   },
 
-  async getUserById(id: string): Promise<User | undefined> {
-    return userRepository.getUserById(id);
+  async getUserById(id: string): Promise<UserWithInformation> {
+    const user = await userRepository.getUserById(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const userInfo = await userInformationRepository.getUserInfoByUserId(id);
+    if (!userInfo) {
+      throw new Error("User information not found");
+    }
+    return { ...user, ...userInfo };
   },
 
   async updateUser(

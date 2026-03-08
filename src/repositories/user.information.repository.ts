@@ -26,20 +26,21 @@ export const userInformationRepository = {
     };
   },
 
-  async getUserInfoByUserId(
-    userId: string,
-  ): Promise<UserInformation | undefined> {
+  async getUserInfoByUserId(userId: string): Promise<UserInformation> {
     const [userInfo] = await db
       .select()
       .from(user_informations)
       .where(eq(user_informations.userId, userId));
-    return userInfo
-      ? {
-          citizen_id: userInfo.citizen_id,
-          gender: userInfo.gender,
-          phone_number: userInfo.phone_number,
-          email: userInfo.email,
-        }
-      : undefined;
+
+    if (!userInfo) {
+      throw new Error("User information not found");
+    }
+
+    return {
+      citizen_id: userInfo.citizen_id,
+      gender: userInfo.gender,
+      phone_number: userInfo.phone_number,
+      email: userInfo.email,
+    };
   },
 };
